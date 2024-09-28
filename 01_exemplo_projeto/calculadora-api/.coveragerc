@@ -1,0 +1,18 @@
+[run]
+source = project
+omit =
+    /dist-packages/
+    /distutils/
+    tests/*
+    static/*
+
+[report]
+omit =
+    /python?.?/
+    /dist-packages/
+    /pypy/
+    /pypy-?.?.?/
+    tests/*
+    static/*
+
+ 

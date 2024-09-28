@@ -1,0 +1,61 @@
+version: '3'
+services:
+  gitlab-web:
+    image: 'gitlab/gitlab-ce:16.11.6-ce.0'
+    container_name: gitlab-web
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://172.31.122.120'
+        nginx['enable'] = true
+
+        #gitlab registry configuration
+        registry['enable'] = true
+        registry_external_url 'http://172.31.122.120:9050'
+
+        # Prometheus
+        prometheus['enable'] = false
+        prometheus['listen_address'] = '0.0.0.0:9090'
+        prometheus['flags'] = {
+               'storage.tsdb.path' => "/var/opt/gitlab/prometheus/data",
+               'storage.tsdb.retention.time' => "1d",
+               'config.file' => "/var/opt/gitlab/prometheus/prometheus.yml"
+        }
+
+    ports:
+      - "2222:22"
+      - "80:80"
+      - "443:443"
+      - "9050:9050"
+    volumes:
+      - config:/etc/gitlab
+      - logs:/var/log/gitlab
+      - data:/var/opt/gitlab
+      - gitlab-registry:/var/opt/gitlab/registry
+    networks:
+      - gitlab-network
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:alpine-v15.11.0
+    container_name: gitlab-runner
+    volumes:
+      - ./config:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root/.docker:/root/.docker
+    ports:
+      - "9252:9252"
+    depends_on:
+      - gitlab-web
+    networks:
+      - gitlab-network
+
+volumes:
+  config:
+  logs:
+  data:
+  gitlab-registry:
+
+networks:
+  gitlab-network:
+    name: gitlab-network
+    driver: bridge
+

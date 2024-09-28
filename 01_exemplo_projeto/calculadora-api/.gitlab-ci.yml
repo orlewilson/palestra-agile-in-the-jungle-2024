@@ -1,0 +1,94 @@
+stages:
+  - tests
+  - reports
+
+Security Tests:
+  image: proforlewilson/test-environment-palestra-agile-in-the-jungle
+
+  stage: tests
+  
+  tags:
+    - docker
+  
+  script:
+    - sh quality/run_security.sh
+  
+  artifacts:
+    name: "Security Tests Report"
+    paths:
+      - quality/reports
+    expire_in: "30 min"
+
+Static Analysis Tests:
+  image: proforlewilson/test-environment-palestra-agile-in-the-jungle
+
+  stage: tests
+  
+  tags:
+    - docker
+  
+  script:
+    - sh quality/run_lint.sh
+  
+  artifacts:
+    name: "Static Analysis Tests Report"
+    paths:
+      - quality/reports
+    expire_in: "30 min"
+    
+Unit Tests:
+  image: proforlewilson/test-environment-palestra-agile-in-the-jungle
+
+  stage: tests
+  
+  tags:
+    - docker
+  
+  script:
+    - sh quality/run_unit_tests.sh
+  
+  artifacts:
+    name: "Coverage Tests Report"
+    paths:
+      - quality/reports
+    expire_in: "30 min"
+  
+Integration Tests:
+  image: proforlewilson/test-environment-palestra-agile-in-the-jungle
+
+  stage: tests
+  
+  tags:
+    - docker
+  
+  script:
+    - sh quality/run_integration_tests.sh
+  
+  artifacts:
+    name: "Integration Tests Report"
+    paths:
+      - quality/reports
+    expire_in: "30 min"
+  
+Quality Tests Reports:
+  image: proforlewilson/test-environment-palestra-agile-in-the-jungle
+
+  stage: reports
+  
+  tags:
+    - docker
+  
+  script:
+    - echo "Generating the Quality Tests Reports"
+  
+  artifacts:
+    name: "Quality Assurance Reports"
+    paths:
+      - quality/reports
+    expire_in: "5 days"
+  
+  dependencies:
+    - Security Tests
+    - Static Analysis Tests
+    - Unit Tests
+    - Integration Tests

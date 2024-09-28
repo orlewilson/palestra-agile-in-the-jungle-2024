@@ -1,0 +1,1872 @@
+{
+	"info": {
+		"_postman_id": "05544d8a-c826-4bb0-8338-7201c4fdbaf6",
+		"name": "Calculadora_Teste_Integracao",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14238689",
+		"_collection_link": "https://blue-astronaut-930883.postman.co/workspace/Fametro-Oficina~cfee642e-a73b-44f8-98dd-3df905cdd864/collection/14238689-05544d8a-c826-4bb0-8338-7201c4fdbaf6?action=share&source=collection_link&creator=14238689"
+	},
+	"item": [
+		{
+			"name": "Somar",
+			"item": [
+				{
+					"name": "Validar Schema com valores válidos",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Schema a ser validado\r",
+									"const json_schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"a\": {\r",
+									"            \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"b\": {\r",
+									"            \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"result\": {\r",
+									"            \"type\": \"integer\"\r",
+									"        }\r",
+									"    },\r",
+									"    \"required\": [\r",
+									"        \"a\",\r",
+									"        \"b\",\r",
+									"        \"result\"\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 200?\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json?\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Validação do Schema\r",
+									"pm.test('Schema is valid?', () => {\r",
+									"    pm.response.to.have.jsonSchema(json_schema);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 0,\r\n    \"b\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/somar",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"somar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validar Schema com valores inválidos",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Schema a ser validado\r",
+									"const json_schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"detail\": {\r",
+									"            \"type\": \"array\",\r",
+									"            \"items\": [\r",
+									"                {\r",
+									"                    \"type\": \"object\",\r",
+									"                    \"properties\": {\r",
+									"                        \"type\": {\r",
+									"                            \"type\": \"string\"\r",
+									"                        },\r",
+									"                        \"loc\": {\r",
+									"                            \"type\": \"array\",\r",
+									"                            \"items\": [\r",
+									"                                {\r",
+									"                                    \"type\": \"string\"\r",
+									"                                }\r",
+									"                            ]\r",
+									"                        },\r",
+									"                        \"msg\": {\r",
+									"                            \"type\": \"string\"\r",
+									"                        },\r",
+									"                        \"input\": {\r",
+									"                            \"type\": [\"number\", \"object\"]\r",
+									"                        }\r",
+									"                    },\r",
+									"                    \"required\": [\r",
+									"                        \"type\",\r",
+									"                        \"loc\",\r",
+									"                        \"msg\",\r",
+									"                        \"input\"\r",
+									"                    ]\r",
+									"                }\r",
+									"            ]\r",
+									"        }\r",
+									"    },\r",
+									"    \"required\": [\r",
+									"        \"detail\"\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 422?\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json?\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Validação do Schema\r",
+									"pm.test('Schema is valid?', () => {\r",
+									"    pm.response.to.have.jsonSchema(json_schema);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 0.1,\r\n    \"b\": 0.1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/somar",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"somar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "a = 1 e b = 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Resultado a ser validado\r",
+									"const json_resultado = {\r",
+									"    \"a\": 1,\r",
+									"    \"b\": 1,\r",
+									"    \"result\": 2\r",
+									"}\r",
+									"// Resposta da requisição\r",
+									"const json_response = pm.response.json();\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Verificação da mensagem\r",
+									"pm.test(\"a = 1, b = 1, and result = 2?\", function () {\r",
+									"    pm.expect(json_response).to.eql(json_resultado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 1,\r\n    \"b\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/somar",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"somar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "a = 1 e b = 1.1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Resultado a ser validado\r",
+									"const json_resultado = {\r",
+									"    \"detail\": [\r",
+									"        {\r",
+									"            \"type\": \"int_from_float\",\r",
+									"            \"loc\": [\r",
+									"                \"body\",\r",
+									"                \"b\"\r",
+									"            ],\r",
+									"            \"msg\": \"Input should be a valid integer, got a number with a fractional part\",\r",
+									"            \"input\": 1.1\r",
+									"        }\r",
+									"    ]\r",
+									"}\r",
+									"// Resposta da requisição\r",
+									"const json_response = pm.response.json();\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 422\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Verificação da mensagem\r",
+									"pm.test(\"Error when a = 1, and b = 1.1?\", function () {\r",
+									"    pm.expect(json_response).to.eql(json_resultado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 1,\r\n    \"b\": 1.1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/somar",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"somar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "body vazio",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Resultado a ser validado\r",
+									"const json_resultado = {\r",
+									"    \"detail\": [\r",
+									"        {\r",
+									"            \"type\": \"missing\",\r",
+									"            \"loc\": [\r",
+									"                \"body\",\r",
+									"                \"a\"\r",
+									"            ],\r",
+									"            \"msg\": \"Field required\",\r",
+									"            \"input\": {}\r",
+									"        },\r",
+									"        {\r",
+									"            \"type\": \"missing\",\r",
+									"            \"loc\": [\r",
+									"                \"body\",\r",
+									"                \"b\"\r",
+									"            ],\r",
+									"            \"msg\": \"Field required\",\r",
+									"            \"input\": {}\r",
+									"        }\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"// Resposta da requisição\r",
+									"const json_response = pm.response.json();\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 422?\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json?\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Verificação da mensagem\r",
+									"pm.test(\"Error when a and b are absent?\", function () {\r",
+									"    pm.expect(json_response).to.eql(json_resultado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/somar",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"somar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subtrair",
+			"item": [
+				{
+					"name": "Validar Schema com valores válidos",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Schema a ser validado\r",
+									"const json_schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"a\": {\r",
+									"            \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"b\": {\r",
+									"            \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"result\": {\r",
+									"            \"type\": \"integer\"\r",
+									"        }\r",
+									"    },\r",
+									"    \"required\": [\r",
+									"        \"a\",\r",
+									"        \"b\",\r",
+									"        \"result\"\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 200?\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json?\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Validação do Schema\r",
+									"pm.test('Schema is valid?', () => {\r",
+									"    pm.response.to.have.jsonSchema(json_schema);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 0,\r\n    \"b\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/subtrair",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"subtrair"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validar Schema com valores inválidos",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Schema a ser validado\r",
+									"const json_schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"detail\": {\r",
+									"            \"type\": \"array\",\r",
+									"            \"items\": [\r",
+									"                {\r",
+									"                    \"type\": \"object\",\r",
+									"                    \"properties\": {\r",
+									"                        \"type\": {\r",
+									"                            \"type\": \"string\"\r",
+									"                        },\r",
+									"                        \"loc\": {\r",
+									"                            \"type\": \"array\",\r",
+									"                            \"items\": [\r",
+									"                                {\r",
+									"                                    \"type\": \"string\"\r",
+									"                                }\r",
+									"                            ]\r",
+									"                        },\r",
+									"                        \"msg\": {\r",
+									"                            \"type\": \"string\"\r",
+									"                        },\r",
+									"                        \"input\": {\r",
+									"                            \"type\": [\"number\", \"object\"]\r",
+									"                        }\r",
+									"                    },\r",
+									"                    \"required\": [\r",
+									"                        \"type\",\r",
+									"                        \"loc\",\r",
+									"                        \"msg\",\r",
+									"                        \"input\"\r",
+									"                    ]\r",
+									"                }\r",
+									"            ]\r",
+									"        }\r",
+									"    },\r",
+									"    \"required\": [\r",
+									"        \"detail\"\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 422?\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json?\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Validação do Schema\r",
+									"pm.test('Schema is valid?', () => {\r",
+									"    pm.response.to.have.jsonSchema(json_schema);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 0.1,\r\n    \"b\": 0.1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/subtrair",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"subtrair"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "a = 1 e b = 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Resultado a ser validado\r",
+									"const json_resultado = {\r",
+									"    \"a\": 1,\r",
+									"    \"b\": 1,\r",
+									"    \"result\": 0\r",
+									"}\r",
+									"// Resposta da requisição\r",
+									"const json_response = pm.response.json();\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Verificação da mensagem\r",
+									"pm.test(\"a = 1, b = 1, and result = 2?\", function () {\r",
+									"    pm.expect(json_response).to.eql(json_resultado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 1,\r\n    \"b\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/subtrair",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"subtrair"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "a = 1 e b = 1.1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Resultado a ser validado\r",
+									"const json_resultado = {\r",
+									"    \"detail\": [\r",
+									"        {\r",
+									"            \"type\": \"int_from_float\",\r",
+									"            \"loc\": [\r",
+									"                \"body\",\r",
+									"                \"b\"\r",
+									"            ],\r",
+									"            \"msg\": \"Input should be a valid integer, got a number with a fractional part\",\r",
+									"            \"input\": 1.1\r",
+									"        }\r",
+									"    ]\r",
+									"}\r",
+									"// Resposta da requisição\r",
+									"const json_response = pm.response.json();\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 422\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Verificação da mensagem\r",
+									"pm.test(\"Error when a = 1, and b = 1.1?\", function () {\r",
+									"    pm.expect(json_response).to.eql(json_resultado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 1,\r\n    \"b\": 1.1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/subtrair",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"subtrair"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "body vazio",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Resultado a ser validado\r",
+									"const json_resultado = {\r",
+									"    \"detail\": [\r",
+									"        {\r",
+									"            \"type\": \"missing\",\r",
+									"            \"loc\": [\r",
+									"                \"body\",\r",
+									"                \"a\"\r",
+									"            ],\r",
+									"            \"msg\": \"Field required\",\r",
+									"            \"input\": {}\r",
+									"        },\r",
+									"        {\r",
+									"            \"type\": \"missing\",\r",
+									"            \"loc\": [\r",
+									"                \"body\",\r",
+									"                \"b\"\r",
+									"            ],\r",
+									"            \"msg\": \"Field required\",\r",
+									"            \"input\": {}\r",
+									"        }\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"// Resposta da requisição\r",
+									"const json_response = pm.response.json();\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 422?\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json?\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Verificação da mensagem\r",
+									"pm.test(\"Error when a and b are absent?\", function () {\r",
+									"    pm.expect(json_response).to.eql(json_resultado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/subtrair",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"subtrair"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Multiplicar",
+			"item": [
+				{
+					"name": "Validar Schema com valores válidos",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Schema a ser validado\r",
+									"const json_schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"a\": {\r",
+									"            \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"b\": {\r",
+									"            \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"result\": {\r",
+									"            \"type\": \"integer\"\r",
+									"        }\r",
+									"    },\r",
+									"    \"required\": [\r",
+									"        \"a\",\r",
+									"        \"b\",\r",
+									"        \"result\"\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 200?\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json?\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Validação do Schema\r",
+									"pm.test('Schema is valid?', () => {\r",
+									"    pm.response.to.have.jsonSchema(json_schema);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 0,\r\n    \"b\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/multiplicar",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"multiplicar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validar Schema com valores inválidos",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Schema a ser validado\r",
+									"const json_schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"detail\": {\r",
+									"            \"type\": \"array\",\r",
+									"            \"items\": [\r",
+									"                {\r",
+									"                    \"type\": \"object\",\r",
+									"                    \"properties\": {\r",
+									"                        \"type\": {\r",
+									"                            \"type\": \"string\"\r",
+									"                        },\r",
+									"                        \"loc\": {\r",
+									"                            \"type\": \"array\",\r",
+									"                            \"items\": [\r",
+									"                                {\r",
+									"                                    \"type\": \"string\"\r",
+									"                                }\r",
+									"                            ]\r",
+									"                        },\r",
+									"                        \"msg\": {\r",
+									"                            \"type\": \"string\"\r",
+									"                        },\r",
+									"                        \"input\": {\r",
+									"                            \"type\": [\"number\", \"object\"]\r",
+									"                        }\r",
+									"                    },\r",
+									"                    \"required\": [\r",
+									"                        \"type\",\r",
+									"                        \"loc\",\r",
+									"                        \"msg\",\r",
+									"                        \"input\"\r",
+									"                    ]\r",
+									"                }\r",
+									"            ]\r",
+									"        }\r",
+									"    },\r",
+									"    \"required\": [\r",
+									"        \"detail\"\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 422?\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json?\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Validação do Schema\r",
+									"pm.test('Schema is valid?', () => {\r",
+									"    pm.response.to.have.jsonSchema(json_schema);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 0.1,\r\n    \"b\": 0.1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/multiplicar",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"multiplicar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "a = 1 e b = 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Resultado a ser validado\r",
+									"const json_resultado = {\r",
+									"    \"a\": 1,\r",
+									"    \"b\": 1,\r",
+									"    \"result\": 1\r",
+									"}\r",
+									"// Resposta da requisição\r",
+									"const json_response = pm.response.json();\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Verificação da mensagem\r",
+									"pm.test(\"a = 1, b = 1, and result = 2?\", function () {\r",
+									"    pm.expect(json_response).to.eql(json_resultado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 1,\r\n    \"b\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/multiplicar",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"multiplicar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "a = 1 e b = 1.1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Resultado a ser validado\r",
+									"const json_resultado = {\r",
+									"    \"detail\": [\r",
+									"        {\r",
+									"            \"type\": \"int_from_float\",\r",
+									"            \"loc\": [\r",
+									"                \"body\",\r",
+									"                \"b\"\r",
+									"            ],\r",
+									"            \"msg\": \"Input should be a valid integer, got a number with a fractional part\",\r",
+									"            \"input\": 1.1\r",
+									"        }\r",
+									"    ]\r",
+									"}\r",
+									"// Resposta da requisição\r",
+									"const json_response = pm.response.json();\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 422\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Verificação da mensagem\r",
+									"pm.test(\"Error when a = 1, and b = 1.1?\", function () {\r",
+									"    pm.expect(json_response).to.eql(json_resultado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 1,\r\n    \"b\": 1.1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/multiplicar",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"multiplicar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "body vazio",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Resultado a ser validado\r",
+									"const json_resultado = {\r",
+									"    \"detail\": [\r",
+									"        {\r",
+									"            \"type\": \"missing\",\r",
+									"            \"loc\": [\r",
+									"                \"body\",\r",
+									"                \"a\"\r",
+									"            ],\r",
+									"            \"msg\": \"Field required\",\r",
+									"            \"input\": {}\r",
+									"        },\r",
+									"        {\r",
+									"            \"type\": \"missing\",\r",
+									"            \"loc\": [\r",
+									"                \"body\",\r",
+									"                \"b\"\r",
+									"            ],\r",
+									"            \"msg\": \"Field required\",\r",
+									"            \"input\": {}\r",
+									"        }\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"// Resposta da requisição\r",
+									"const json_response = pm.response.json();\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 422?\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json?\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Verificação da mensagem\r",
+									"pm.test(\"Error when a and b are absent?\", function () {\r",
+									"    pm.expect(json_response).to.eql(json_resultado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/multiplicar",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"multiplicar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dividir",
+			"item": [
+				{
+					"name": "Validar Schema com valores válidos",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Schema a ser validado\r",
+									"const json_schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"a\": {\r",
+									"            \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"b\": {\r",
+									"            \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"result\": {\r",
+									"            \"type\": \"integer\"\r",
+									"        }\r",
+									"    },\r",
+									"    \"required\": [\r",
+									"        \"a\",\r",
+									"        \"b\",\r",
+									"        \"result\"\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 200?\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json?\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Validação do Schema\r",
+									"pm.test('Schema is valid?', () => {\r",
+									"    pm.response.to.have.jsonSchema(json_schema);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 0,\r\n    \"b\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/dividir",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"dividir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validar Schema com valores inválidos",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Schema a ser validado\r",
+									"const json_schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"detail\": {\r",
+									"            \"type\": \"array\",\r",
+									"            \"items\": [\r",
+									"                {\r",
+									"                    \"type\": \"object\",\r",
+									"                    \"properties\": {\r",
+									"                        \"type\": {\r",
+									"                            \"type\": \"string\"\r",
+									"                        },\r",
+									"                        \"loc\": {\r",
+									"                            \"type\": \"array\",\r",
+									"                            \"items\": [\r",
+									"                                {\r",
+									"                                    \"type\": \"string\"\r",
+									"                                }\r",
+									"                            ]\r",
+									"                        },\r",
+									"                        \"msg\": {\r",
+									"                            \"type\": \"string\"\r",
+									"                        },\r",
+									"                        \"input\": {\r",
+									"                            \"type\": [\"number\", \"object\"]\r",
+									"                        }\r",
+									"                    },\r",
+									"                    \"required\": [\r",
+									"                        \"type\",\r",
+									"                        \"loc\",\r",
+									"                        \"msg\",\r",
+									"                        \"input\"\r",
+									"                    ]\r",
+									"                }\r",
+									"            ]\r",
+									"        }\r",
+									"    },\r",
+									"    \"required\": [\r",
+									"        \"detail\"\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 422?\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json?\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Validação do Schema\r",
+									"pm.test('Schema is valid?', () => {\r",
+									"    pm.response.to.have.jsonSchema(json_schema);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 0.1,\r\n    \"b\": 0.1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/dividir",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"dividir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "a = 1 e b = 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Resultado a ser validado\r",
+									"const json_resultado = {\r",
+									"    \"a\": 1,\r",
+									"    \"b\": 1,\r",
+									"    \"result\": 1\r",
+									"}\r",
+									"// Resposta da requisição\r",
+									"const json_response = pm.response.json();\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Verificação da mensagem\r",
+									"pm.test(\"a = 1, b = 1, and result = 1?\", function () {\r",
+									"    pm.expect(json_response).to.eql(json_resultado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 1,\r\n    \"b\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/dividir",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"dividir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "a = 1 e b = 1.1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Resultado a ser validado\r",
+									"const json_resultado = {\r",
+									"    \"detail\": [\r",
+									"        {\r",
+									"            \"type\": \"int_from_float\",\r",
+									"            \"loc\": [\r",
+									"                \"body\",\r",
+									"                \"b\"\r",
+									"            ],\r",
+									"            \"msg\": \"Input should be a valid integer, got a number with a fractional part\",\r",
+									"            \"input\": 1.1\r",
+									"        }\r",
+									"    ]\r",
+									"}\r",
+									"// Resposta da requisição\r",
+									"const json_response = pm.response.json();\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 422\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Verificação da mensagem\r",
+									"pm.test(\"Error when a = 1, and b = 1.1?\", function () {\r",
+									"    pm.expect(json_response).to.eql(json_resultado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 1,\r\n    \"b\": 1.1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/dividir",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"dividir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "body vazio",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Resultado a ser validado\r",
+									"const json_resultado = {\r",
+									"    \"detail\": [\r",
+									"        {\r",
+									"            \"type\": \"missing\",\r",
+									"            \"loc\": [\r",
+									"                \"body\",\r",
+									"                \"a\"\r",
+									"            ],\r",
+									"            \"msg\": \"Field required\",\r",
+									"            \"input\": {}\r",
+									"        },\r",
+									"        {\r",
+									"            \"type\": \"missing\",\r",
+									"            \"loc\": [\r",
+									"                \"body\",\r",
+									"                \"b\"\r",
+									"            ],\r",
+									"            \"msg\": \"Field required\",\r",
+									"            \"input\": {}\r",
+									"        }\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"// Resposta da requisição\r",
+									"const json_response = pm.response.json();\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 422?\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json?\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Verificação da mensagem\r",
+									"pm.test(\"Error when a and b are absent?\", function () {\r",
+									"    pm.expect(json_response).to.eql(json_resultado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/dividir",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"dividir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "a = 1 e b = 0",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Resultado a ser validado\r",
+									"const json_resultado = {\r",
+									"    \"detail\": [\r",
+									"        {\r",
+									"            \"type\": \"zero_division_error\",\r",
+									"            \"loc\": [\r",
+									"                \"body\",\r",
+									"                \"b\"\r",
+									"            ],\r",
+									"            \"msg\": \"Input should be non-zero, got zero number\",\r",
+									"            \"input\": 0\r",
+									"        }\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"// Resposta da requisição\r",
+									"const json_response = pm.response.json();\r",
+									"\r",
+									"// Verificação do status code\r",
+									"pm.test(\"Status code is 422\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"// Verificação do Content-Type\r",
+									"pm.test(\"Content-Type header is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Verificação da mensagem\r",
+									"pm.test(\"Error when a = 1, and b = 1.1?\", function () {\r",
+									"    pm.expect(json_response).to.eql(json_resultado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"a\": 1,\r\n    \"b\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endereco_servidor}}:{{porta}}/dividir",
+							"protocol": "http",
+							"host": [
+								"{{endereco_servidor}}"
+							],
+							"port": "{{porta}}",
+							"path": [
+								"dividir"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "endereco_servidor",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "porta",
+			"value": "5000",
+			"type": "string"
+		}
+	]
+}
